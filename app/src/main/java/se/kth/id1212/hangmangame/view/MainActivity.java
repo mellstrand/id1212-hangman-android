@@ -1,17 +1,23 @@
-package se.kth.id1212.hangmangame;
+package se.kth.id1212.hangmangame.view;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import se.kth.id1212.hangmangame.R;
+
+/**
+ * @author Tobias Mellstrand
+ * @date 2017-12-13.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startButton;
+    private Button connectButton;
     private EditText nameField;
 
     @Override
@@ -24,16 +30,15 @@ public class MainActivity extends AppCompatActivity {
     public void setupUserInterface() {
 
         nameField = (EditText) findViewById(R.id.nameField);
-        startButton = (Button) findViewById(R.id.startButton);
+        connectButton = (Button) findViewById(R.id.connectButton);
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+        connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String playerName = nameField.getText().toString();
                 if (playerName.isEmpty()) {
-                    //Snackbar.make(findViewById(R.id.myMainLayout), "Please enter name",
-                    //        Snackbar.LENGTH_SHORT)
-                    //        .show();
+                    Toast.makeText(MainActivity.this, "Please type a name", Toast.LENGTH_LONG).show();
+
                 } else {
                     startGame(playerName);
                 }
