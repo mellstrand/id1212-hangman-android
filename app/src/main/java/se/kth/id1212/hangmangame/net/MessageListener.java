@@ -10,11 +10,11 @@ import se.kth.id1212.hangmangame.common.ServerMessage;
  * @date 2017-12-13.
  */
 
-public class MessageListener implements Runnable {
+public class MessageListener extends Thread {
 
-    protected final ServerMessage serverMessage;
+    private final ServerMessage serverMessage;
     private BufferedReader fromServer;
-    private boolean receive = false;
+    private volatile boolean receive = false;
 
     public MessageListener(final ServerMessage serverMessage, BufferedReader fromServer) {
         this.serverMessage = serverMessage;
@@ -25,12 +25,28 @@ public class MessageListener implements Runnable {
     @Override
     public void run() {
         try {
-            while (receive) {
-                serverMessage.handleMessage(fromServer.readLine());
+            while (receive && !isInterrupted()) {
+                deliver(fromServer.readLine());
+            }
+            if(isInterrupted()) {
+                shutdown();
             }
         } catch (IOException ioe) {
             receive = false;
             System.err.println("ERROR; MessageListener.run()" + ioe);
+        }
+    }
+
+    public void shutdown() {
+        receive = false;
+    }
+
+    /**
+     * @param message Content to be sent to GameActivity
+     */
+    private void deliver(String message) {
+        if(receive) {
+            serverMessage.handleMessage(message);
         }
     }
 

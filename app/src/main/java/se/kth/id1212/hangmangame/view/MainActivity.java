@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import se.kth.id1212.hangmangame.R;
+import se.kth.id1212.hangmangame.common.Constants;
 
 /**
  * @author Tobias Mellstrand
@@ -17,7 +18,6 @@ import se.kth.id1212.hangmangame.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button connectButton;
     private EditText nameField;
 
     @Override
@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupUserInterface() {
 
-        nameField = (EditText) findViewById(R.id.nameField);
-        connectButton = (Button) findViewById(R.id.connectButton);
+        nameField = findViewById(R.id.nameField);
+        Button connectButton = findViewById(R.id.connectButton);
 
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 String playerName = nameField.getText().toString();
                 if (playerName.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please type a name", Toast.LENGTH_LONG).show();
-
                 } else {
+                    nameField.getText().clear();
                     startGame(playerName);
                 }
             }
@@ -49,8 +49,19 @@ public class MainActivity extends AppCompatActivity {
     public void startGame(String playerName) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("name", playerName);
-        startActivity(intent);
+        startActivityForResult(intent, Constants.GAME_ACTIVITY);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.GAME_ACTIVITY) {
+            if(resultCode == Constants.GAME_FINISHED) {
+                Toast.makeText(MainActivity.this, "Game closed successfully", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Game closed other way", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }

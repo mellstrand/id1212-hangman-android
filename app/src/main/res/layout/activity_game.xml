@@ -17,43 +17,41 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight=".33"
-            android:text="INIT GAME" />
+            android:text="@string/init_game" />
 
         <Button
             android:id="@+id/newWordButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight=".33"
-            android:text="New Word" />
+            android:text="@string/new_word" />
 
         <Button
             android:id="@+id/endGameButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight=".33"
-            android:text="End Game" />
+            android:text="@string/end_game" />
 
     </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_marginTop="5dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:baselineAligned="true">
 
             <TextView
                 android:id="@+id/guess"
-                android:layout_width="187dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".30"
-                android:text="Word to guess"
+                android:text="@string/word_to_guess"
                 android:textSize="24sp" />
 
             <TextView
@@ -61,21 +59,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".70"
+                android:text="@string/no_value"
                 android:textSize="24sp" />
 
         </TableRow>
 
         <TableRow
+                android:layout_height="1dp"
+                android:background="?attr/colorButtonNormal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_span="2"
+                android:text=""/>
+
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
+            android:layout_height="100dp">
 
             <TextView
                 android:id="@+id/remaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".30"
-                android:text="Remaining guesses"
+                android:text="@string/remaining_guesses"
                 android:textSize="24sp" />
 
             <TextView
@@ -83,9 +93,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".70"
+                android:text="@string/no_value"
                 android:textSize="24sp" />
 
         </TableRow>
+
+        <TableRow
+            android:layout_height="1dp"
+            android:background="?attr/colorButtonNormal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_span="2"
+                android:text=""/>
+
+        </TableRow>
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -97,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".30"
-                android:text="Game score"
+                android:text="@string/game_score"
                 android:textSize="24sp" />
 
             <TextView
@@ -105,7 +129,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".70"
+                android:text="@string/zero"
                 android:textSize="24sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_height="1dp"
+            android:background="?attr/colorButtonNormal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_span="2"
+                android:text=""/>
 
         </TableRow>
 
@@ -114,25 +151,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/guessField"
+            android:id="@+id/sendGuessField"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight=".60"
             android:ems="12"
-            android:hint="Make guess"
-            android:inputType="text" />
+            android:hint="@string/make_guess"
+            android:inputType="text"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/sendGuessButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight=".40"
-            android:text="Send guess" />
+            android:text="@string/send_guess"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

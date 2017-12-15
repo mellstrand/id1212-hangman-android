@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import se.kth.id1212.hangmangame.view.GameActivity;
-import se.kth.id1212.hangmangame.common.ServerMessage;
+import se.kth.id1212.hangmangame.common.Constants;
 
 /**
  * @author Tobias Mellstrand
@@ -17,39 +16,21 @@ import se.kth.id1212.hangmangame.common.ServerMessage;
 
 public class ServerConnection {
 
-    private GameActivity gameActivity;
     private String playerName;
-    protected final ServerMessage serverMessage;
-    private boolean receive = false;
     private Socket socket;
     private BufferedReader fromServer;
     private PrintWriter toServer;
 
-    public ServerConnection(final ServerMessage serverMessage, String playerName) {
-        this.serverMessage = serverMessage;
+    public ServerConnection(String playerName) {
         this.playerName = playerName;
     }
-/*
-    public void run() {
-        try {
-            transmit(playerName);
-            while (receive) {
-                fromServer.readLine();
-            }
-        } catch (IOException ioe) {
-            receive = false;
-            System.err.println("ERROR, RemoteConnection/run()" + ioe);
-        }
-    }
-*/
+
     public void connect() {
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress("10.0.2.2", 5000));
+            socket.connect(new InetSocketAddress(Constants.SERVER_NAME, Constants.SERVER_PORT));
             fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             toServer = new PrintWriter(socket.getOutputStream());
-
-            //new Thread(new MessageListener(serverMessage, fromServer)).start();
 
             transmit(playerName);
 

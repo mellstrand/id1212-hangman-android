@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">HangmanGame</string>
+    <string name="enter_name">Enter name</string>
     <string name="message_sent">Message sent!</string>
+    <string name="connect_to_server">Connect to server</string>
+    <string name="end_game">End Game</string>
+    <string name="new_word">New Word</string>
+    <string name="init_game">INIT GAME</string>
+    <string name="word_to_guess">Word to guess</string>
+    <string name="remaining_guesses">Remaining guesses</string>
+    <string name="game_score">Game score</string>
+    <string name="make_guess">Make guess</string>
+    <string name="send_guess">Send guess</string>
+    <string name="no_value">no value</string>
+    <string name="zero">0</string>
 </resources>

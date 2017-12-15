@@ -16,6 +16,9 @@ public class Constants {
 
     public final static String TCP_DELIMETER = "##";
 
-    public final static String LOCAL_DELIMETER = " ";
+    public static final int GAME_ACTIVITY = 1;
+
+    public static final int GAME_FINISHED = 2;
+
 
 }
