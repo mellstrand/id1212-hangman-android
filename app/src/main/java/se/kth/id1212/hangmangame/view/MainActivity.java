@@ -13,7 +13,9 @@ import se.kth.id1212.hangmangame.common.Constants;
 
 /**
  * @author Tobias Mellstrand
- * @date 2017-12-13.
+ * @date 2017-12-13
+ *
+ * Main activity for the game
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setupUserInterface();
     }
 
+    /**
+     * Fixes the UI elements and listener to the button
+     */
     public void setupUserInterface() {
 
         nameField = findViewById(R.id.nameField);
@@ -46,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Read name and send it along to new activity
+     * @param playerName
+     */
     public void startGame(String playerName) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("name", playerName);
@@ -53,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * When coming back from the started activity, GameActivity in this app
+     * @param requestCode Started activity
+     * @param resultCode The closed activity's status when closed
+     * @param data The closed activity's data if any
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == Constants.GAME_ACTIVITY) {

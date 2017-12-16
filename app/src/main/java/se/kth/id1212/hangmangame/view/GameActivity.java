@@ -22,9 +22,10 @@ import se.kth.id1212.hangmangame.net.ServerConnection;
 
 /**
  * @author Tobias Mellstrand
- * @date 2017-12-13.
+ * @date 2017-12-13
+ *
+ * Activity for the actual game playing sequences
  */
-
 public class GameActivity extends AppCompatActivity implements ServerMessage {
 
     private ServerConnection serverConnection;
@@ -47,12 +48,18 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
 
     }
 
+    /**
+     * Retrieve player name and then make a connection to the server
+     */
     public void connect() {
         Intent intent = getIntent();
         String playerName = intent.getExtras().getString("name");
         new ConnectServer().execute(playerName);
     }
 
+    /**
+     * Fixing the UI elements and adding listener to corresponding buttons
+     */
     public void setupGameInterface() {
         initGameButton = findViewById(R.id.initGameButton);
         newWordButton = findViewById(R.id.newWordButton);
@@ -100,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
         sendGuessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringJoiner joiner = new StringJoiner(Constants.TCP_DELIMETER);
+                StringJoiner joiner = new StringJoiner(Constants.TCP_DELIMITER);
                 joiner.add(MessageTypes.GUESS.toString());
                 joiner.add(sendGuessField.getText().toString());
                 new sendServerMessage().execute(joiner.toString());
@@ -111,8 +118,16 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
 
     }
 
+    /**
+     * Receive messages from MessageListener who receives it from the server
+     * MessageListener runs on another thread, therefore switch to UI thread.
+     * Sends to 'setMessage' if a status message from the server
+     * Otherwise show message for "debug" purpose.
+     *
+     * @param message Message received from game server
+     */
     public void handleMessage(final String message) {
-        final String[] tokens = message.split(Constants.TCP_DELIMETER);
+        final String[] tokens = message.split(Constants.TCP_DELIMITER);
             runOnUiThread(new Runnable() {
                 public void run() {
                     String inputType = tokens[0];
@@ -126,7 +141,12 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
             });
     }
 
-    //TODO FIX GUI AND MESSAGE STRINGS
+    /**
+     * Handles the status message from the server and updates the UI to the user
+     * A lot of splits, could be changed at server side (better message),
+     * or UI side (Another setup of TextViews)
+     * @param messages Status message from the game server
+     */
     public void setMessage(final String... messages) {
         String[] guess = messages[1].split(":");
         String guessFixed = guess[1].replace("", " ").trim();
@@ -138,6 +158,10 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
         sendGuessButton.setEnabled(true);
     }
 
+    /**
+     * A method to close the activity and it's started threads, sockets, etc.
+     * @param status Exit status, e.g. FINISHED, ERROR, or...
+     */
     private void closeActivity(int status) {
         messageListener.shutdown();
         serverConnection.disconnect();
@@ -145,6 +169,10 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
         GameActivity.this.finish();
     }
 
+    /**
+     * AsyncTask to connect to the server
+     * After establishment, start the MessageListener
+     */
     @SuppressLint("StaticFieldLeak")
     private class ConnectServer extends AsyncTask<String, Void, ServerConnection> {
 
@@ -164,6 +192,9 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
         }
     }
 
+    /**
+     * AsyncTask for sending messages to the server
+     */
     @SuppressLint("StaticFieldLeak")
     private class sendServerMessage extends AsyncTask<String, Void, Boolean> {
 

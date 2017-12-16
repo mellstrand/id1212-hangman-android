@@ -7,7 +7,10 @@ import se.kth.id1212.hangmangame.common.ServerMessage;
 
 /**
  * @author Tobias Mellstrand
- * @date 2017-12-13.
+ * @date 2017-12-13
+ *
+ * A listener for messages from a server that runs on another thread to not block UI thread
+ * or any other activity
  */
 
 public class MessageListener extends Thread {
@@ -22,6 +25,9 @@ public class MessageListener extends Thread {
         receive = true;
     }
 
+    /**
+     * Waiting for messages from the server
+     */
     @Override
     public void run() {
         try {
@@ -37,11 +43,15 @@ public class MessageListener extends Thread {
         }
     }
 
+    /**
+     * Change state to not retrieve any more messages
+     */
     public void shutdown() {
         receive = false;
     }
 
     /**
+     * A helper method for deliver message back to GameActivity
      * @param message Content to be sent to GameActivity
      */
     private void deliver(String message) {

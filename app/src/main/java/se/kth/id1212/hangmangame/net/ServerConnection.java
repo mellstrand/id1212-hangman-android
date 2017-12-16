@@ -11,7 +11,9 @@ import se.kth.id1212.hangmangame.common.Constants;
 
 /**
  * @author Tobias Mellstrand
- * @date 2017-12-13.
+ * @date 2017-12-13
+ *
+ * Class to handle the remote connection to a server
  */
 
 public class ServerConnection {
@@ -25,6 +27,9 @@ public class ServerConnection {
         this.playerName = playerName;
     }
 
+    /**
+     * Create and open socket and retrieve pipes for reading and sending messages
+     */
     public void connect() {
         try {
             socket = new Socket();
@@ -39,10 +44,17 @@ public class ServerConnection {
         }
     }
 
+    /**
+     * Getter for the reading pipe
+     * @return Reading pipe
+     */
     public BufferedReader getFromServer() {
         return fromServer;
     }
 
+    /**
+     * Close the socket to the remote server
+     */
     public void disconnect() {
         try {
             socket.close();
@@ -52,6 +64,10 @@ public class ServerConnection {
         }
     }
 
+    /**
+     * Send a message to the remote server
+     * @param message Content to be sent
+     */
     public void transmit(String message) {
         toServer.println(message);
         toServer.flush();
