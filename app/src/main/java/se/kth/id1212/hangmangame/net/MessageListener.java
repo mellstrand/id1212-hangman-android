@@ -16,7 +16,7 @@ import se.kth.id1212.hangmangame.common.ServerMessage;
 public class MessageListener extends Thread {
 
     private final ServerMessage serverMessage;
-    private BufferedReader fromServer;
+    private final BufferedReader fromServer;
     private volatile boolean receive = false;
 
     public MessageListener(final ServerMessage serverMessage, BufferedReader fromServer) {
@@ -31,11 +31,8 @@ public class MessageListener extends Thread {
     @Override
     public void run() {
         try {
-            while (receive && !isInterrupted()) {
+            while (receive) {
                 deliver(fromServer.readLine());
-            }
-            if(isInterrupted()) {
-                shutdown();
             }
         } catch (IOException ioe) {
             receive = false;

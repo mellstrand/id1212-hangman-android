@@ -18,7 +18,7 @@ import se.kth.id1212.hangmangame.common.Constants;
 
 public class ServerConnection {
 
-    private String playerName;
+    private final String playerName;
     private Socket socket;
     private BufferedReader fromServer;
     private PrintWriter toServer;

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Fixes the UI elements and listener to the button
      */
-    public void setupUserInterface() {
+    private void setupUserInterface() {
 
         nameField = findViewById(R.id.nameField);
         Button connectButton = findViewById(R.id.connectButton);
@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Read name and send it along to new activity
-     * @param playerName
+     * @param playerName The players name
      */
-    public void startGame(String playerName) {
+    private void startGame(String playerName) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("name", playerName);
         startActivityForResult(intent, Constants.GAME_ACTIVITY);

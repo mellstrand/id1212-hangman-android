@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HangmanGame</string>
     <string name="enter_name">Enter name</string>
+    <string name="connect_init">Connected, press "Init Game" to play</string>
     <string name="message_sent">Message sent!</string>
     <string name="connect_to_server">Connect to server</string>
     <string name="end_game">End Game</string>

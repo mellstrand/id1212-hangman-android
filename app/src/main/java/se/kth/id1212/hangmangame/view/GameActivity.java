@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
     /**
      * Retrieve player name and then make a connection to the server
      */
-    public void connect() {
+    private void connect() {
         Intent intent = getIntent();
         String playerName = intent.getExtras().getString("name");
         new ConnectServer().execute(playerName);
@@ -60,7 +60,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
     /**
      * Fixing the UI elements and adding listener to corresponding buttons
      */
-    public void setupGameInterface() {
+    private void setupGameInterface() {
         initGameButton = findViewById(R.id.initGameButton);
         newWordButton = findViewById(R.id.newWordButton);
         endGameButton = findViewById(R.id.endGameButton);
@@ -128,17 +128,17 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
      */
     public void handleMessage(final String message) {
         final String[] tokens = message.split(Constants.TCP_DELIMITER);
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    String inputType = tokens[0];
-                    String statusType = MessageTypes.STATUS.toString();
-                    if (inputType.equals(statusType)) {
-                        setMessage(tokens);
-                    } else {
-                        Toast.makeText(GameActivity.this, message, Toast.LENGTH_LONG).show();
-                    }
+        runOnUiThread(new Runnable() {
+            public void run() {
+                String inputType = tokens[0];
+                String statusType = MessageTypes.STATUS.toString();
+                if (inputType.equals(statusType)) {
+                    setMessage(tokens);
+                } else {
+                    Toast.makeText(GameActivity.this, message, Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+        });
     }
 
     /**
@@ -147,7 +147,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
      * or UI side (Another setup of TextViews)
      * @param messages Status message from the game server
      */
-    public void setMessage(final String... messages) {
+    private void setMessage(final String... messages) {
         String[] guess = messages[1].split(":");
         String guessFixed = guess[1].replace("", " ").trim();
         guessTextView.setText(guessFixed);
@@ -188,7 +188,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
             GameActivity.this.serverConnection = serverConnection;
             GameActivity.this.messageListener = new MessageListener(GameActivity.this, serverConnection.getFromServer());
             new Thread(messageListener).start();
-            Toast.makeText(GameActivity.this, "Connected, press 'Init Game' to play", Toast.LENGTH_LONG).show();
+            Toast.makeText(GameActivity.this, R.string.connect_init, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -206,7 +206,7 @@ public class GameActivity extends AppCompatActivity implements ServerMessage {
 
         @Override
         protected void onPostExecute(Boolean status) {
-            Toast.makeText(GameActivity.this, "Message sent", Toast.LENGTH_LONG).show();
+            Toast.makeText(GameActivity.this, R.string.message_sent, Toast.LENGTH_LONG).show();
         }
     }
 
